@@ -29,9 +29,11 @@ Next, synchronize Django's database & verify that Django runs correctly:
     $ (venv) python manage.py syncdb # for this project, there's no need to add an administrator
     $ (venv) python manage.py runserver
 
-You should have no errors at this point, and you should be able to reach the Django start page by visiting http://127.0.0.1:8000 in your browser. Setting up Django is beyond the scope of this project, see the official docs for information on this aspect of things.
+You should have no errors at this point, and you should be able to reach the Django start page by visiting http://127.0.0.1:8000 in your browser. Setting up Django is beyond the scope of this project, see [the official docs on installing Django](https://docs.djangoproject.com/en/1.6/intro/install/) for more information.
 
-If successful, the next steps are to start the Celery workers/queues, and send them some tasks. (For reference, see the files `dj_test_app/celery.py`, and `dj_test_app/tasks.py`). The next commands will each require their own terminal window, as you will be running celery in "worker" mode, not in a daemonized mode. so open two more terminal windows, and in each one, navigate to the project root, and activate the virtualenv.
+If successful, the next steps are to start the Celery workers/queues, and send them some tasks. (For reference, see the files `dj_test_app/celery.py`, and `dj_test_app/tasks.py`). The next commands will each require their own terminal window, as you will be running celery in "worker" mode, not in daemonized mode. 
+
+Open two new terminal windows, and in each one, navigate to the project root, and activate the virtualenv.
 
     $ # NEW TERMINAL 1, will run the "default" queue.
     $ workon dj_test_app
@@ -47,9 +49,11 @@ After executing those commands, Celery should produce some information output an
 
     [2014-08-27 13:54:36,274: WARNING/MainProcess] celery@high ready.
 
-Future activity from these workers will be logged to these windows. At this point, you'llwant to watch out for some initial exceptions, especially related to not being able to reach the broker (RabbitMQ). Double-check that you are using the correct RabbitMQ username, password and vhost from the commands above. Those values are configured in the `dj_test_app/settings.py` file. If your setup is correct, you should have no further entries in the logged output.
+Future activity from these workers will be logged to these windows. At this point, you'll want to watch out for some initial exceptions, especially related to not being able to reach the broker (RabbitMQ). Double-check that you are using the correct RabbitMQ username, password and vhost from the commands above. Those values are configured in the `dj_test_app/settings.py` file. If your setup is correct, you should have no further entries in the logged output, at this point.
 
-To put this all together, you can now open up the Django shell, and run some tasks (use the first terminal window you had open, prior to launching the new ones for the celery tasks. Or open up a new terminal, navigate to the project root, and activate your virtualenv). In the `dj_test_app/tasks.py` file, there are two tasks: `add`, and `multiply`. Import them, and run them via `.delay()`, or `.apply_async()`. While running these commands, be sure that you can observe the output for the celery workers.
+Now to see Django and Celery in action together, you can now open up the Django shell, and launch some tasks (use the first terminal window you had open, prior to launching the new ones for the celery tasks. Or open up a new terminal, navigate to the project root, and activate your virtualenv). 
+
+In the `dj_test_app/tasks.py` file, there are two tasks: `add`, and `multiply`. Import them, and run them via `.delay()`, or `.apply_async()`. While running these commands, be sure that you can observe the output for the celery workers.
 
     $ (venv) python manage.py shell
     >>> from dj_test_app.tasks import add, multiply
