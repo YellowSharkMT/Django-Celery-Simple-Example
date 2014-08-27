@@ -11,7 +11,7 @@ This project is based on the following versions:
 
 ### Setup:
 
-You must have RabbitMQ installed (`sudo apt-get install rabbitmq-server`). First, create a user named `rmq_user`, passowrd `abc123`, and a vhost named `rmd_host`:
+You must have RabbitMQ installed (`sudo apt-get install rabbitmq-server`). First, create a user named `rmq_user`, password `abc123`, and a vhost named `rmd_host`:
 
     $ sudo rabbitmqctl add_user rmq_user abc123
     $ sudo rabbitmqctl add_vhost rmq_host
