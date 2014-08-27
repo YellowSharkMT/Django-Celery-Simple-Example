@@ -3,7 +3,6 @@ from celery import task
 
 @task(name='dj_test_app.tasks.add')
 def add(x,y):
-  pause.apply_async(queue='high')
   return x + y
 
 @task
